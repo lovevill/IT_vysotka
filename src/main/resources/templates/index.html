@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск участников</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styleIndex.css">
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="scripts/scriptIndex.js"></script>
+
+</head>
+<body>
+	<div class="header">
+        <img src="emblema.png" alt="Логотип">
+        <div class="header-buttons">
+	        <button class="btn btn-primary" onclick="window.location.href='/admin'">Админ</button>
+	        <button class="btn btn-secondary" onclick="window.location.href='/'">Куратор</button>
+	    </div>
+    </div>
+    <div class="container mt-5">
+        <h1>Поиск участников</h1>
+
+        <!-- Поисковая форма с кнопкой сканирования -->
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="query" placeholder="Введите фамилию, имя или отчество" oninput="searchParticipantsDebounced()">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" onclick="openQrScanner()">Сканировать QR</button>
+            </div>
+        </div>
+        
+        <div class="filters mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="school-filter">Школа</label>
+                <select id="school-filter" class="form-control" onchange="searchParticipantsDebounced()">
+                    <option value="">Все школы</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="audience-filter">Аудитория</label>
+                <select id="audience-filter" class="form-control" onchange="searchParticipantsDebounced()">
+                    <option value="">Все аудитории</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+        <h3 class="mt-4">Результаты поиска</h3>
+        <!-- Таблица для отображения результатов -->
+        <table class="table table-bordered" id="results-table">
+            <thead>
+                <tr>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Школа</th>
+                    <th>Команда</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Здесь будут отображаться результаты поиска -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Сканер QR-кодов -->
+    <div id="qrScannerModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeQrScanner()">&times;</span>
+            <h2>Сканирование QR-кода</h2>
+            <div id="qr-reader" style="width: 300px; margin: 20px auto;"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="participantModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Информация об участнике</h2>
+            <div id="participantDetails"></div>
+            
+            <button type="button" class="btn btn-outline-primary" id="attendanceButton"></button>
+        </div>
+    </div>
+</body>
+</html>
